@@ -12,6 +12,14 @@ class Controller {
     this.rotate = 0;
     this.item = randomPiece;
   }
+  renew(randomPiece) {
+    this.newPiece(randomPiece);
+    for (let i = 0; i < HEIGHT; ++i) {
+      for (let j = 0; j < WIDTH; ++j) {
+        map[i][j] = false;
+      }
+    }
+  }
 }
 
 function updateParameter(game) {
@@ -68,8 +76,8 @@ function makeMap (game) {
 function clearLine() {
   let fullLine = [];
   // record full line 
-  for (let row = HEIGHT-1; row >= 0; --row) {
-    let full = true;
+  for (let row = 0; row < HEIGHT; ++row) {
+    var full = true;
     for (let col = 0; col < WIDTH; ++col) {
       if (map[row][col] !== true) {
         full = false;
@@ -88,6 +96,9 @@ function clearLine() {
     }
   }
 }
+function getRandom() {
+  return Math.floor(Math.random() * Math.floor(7));
+}
 
 function autoDrop (game) {
   if (doesPieceFit(game.x, game.y+1, game.rotate, game.item) === false) {
@@ -96,9 +107,9 @@ function autoDrop (game) {
     // clear line
     clearLine();
     // generate new piece
-    game.newPiece(1);
+    game.newPiece(getRandom());
     if (doesPieceFit(game.x, game.y, game.rotate, game.item) === false) {
-      end = true;
+      game.renew(getRandom());
     } 
   } else {
     game.y++;
