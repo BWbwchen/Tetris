@@ -1,14 +1,16 @@
+let end = false;
 class Controller {
   constructor(randomPiece) {
     this.x = 2;
     this.y = 0;
     this.rotate = 0;
     this.item = randomPiece;
-    this.isEnd = false;
   }
-
-  End() {
-    return this.isEnd;
+  newPiece(randomPiece) {
+    this.x = 2;
+    this.y = 0;
+    this.rotate = 0;
+    this.item = randomPiece;
   }
 }
 
@@ -52,6 +54,53 @@ function rotateIndex(dx, dy, rotate) {
   else if (rotate%4 === 3) return [3-dy, dx];
 }
 
+function makeMap (game) {
+  for (let row = 0; row < HEIGHT; ++row) {
+    for (let col = 0; col < WIDTH; ++col) {
+      if (game.y <= row && row <= game.y+3 && game.x <= col && col <= game.x+3) {
+        const [rotateX, rotateY] = rotateIndex(col-game.x, row-game.y, game.rotate);
+        if (piece[game.item][rotateY][rotateX] === 1) map[row][col] = true;
+      }
+    }
+  }
+}
+
+function clearLine() {
+  let fullLine = [];
+  // record full line 
+  for (let row = HEIGHT-1; row >= 0; --row) {
+    let full = true;
+    for (let col = 0; col < WIDTH; ++col) {
+      if (map[row][col] !== true) {
+        full = false;
+        break;
+      }
+    }
+    if (full) fullLine.push(row);
+  }
+
+  // clear line
+  for (let i = 0; i < fullLine.length; ++i) {
+    for (let j = fullLine[i]; j > 0; --j) {
+      for (let col = 0; col < WIDTH; ++col) {
+        map[j][col] = map[j-1][col];
+      }
+    }
+  }
+}
+
 function autoDrop (game) {
-  game.y += doesPieceFit(game.x, game.y+1, game.rotate, game.item) ? 1:0; 
+  if (doesPieceFit(game.x, game.y+1, game.rotate, game.item) === false) {
+    // push into map
+    makeMap(game);
+    // clear line
+    clearLine();
+    // generate new piece
+    game.newPiece(1);
+    if (doesPieceFit(game.x, game.y, game.rotate, game.item) === false) {
+      end = true;
+    } 
+  } else {
+    game.y++;
+  } 
 }
