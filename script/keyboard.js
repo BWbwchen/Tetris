@@ -23,6 +23,8 @@ function keyboardDown(e) {
       keystatus[0] = true;
       console.log(e.key);
       break;
+    case ' ':
+      keystatus[4] = true;
     default:
       break;
   }

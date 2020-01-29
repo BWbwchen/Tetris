@@ -22,6 +22,16 @@ class Controller {
   }
 }
 
+function checkDownButton(game) {
+  let count = 0;
+  for (let i = 1; i < HEIGHT; ++i) {
+    if (doesPieceFit(game.x, game.y+i, game.rotate, game.item)) {
+      count++;
+    }
+  }
+  game.y += count;
+}
+
 function updateParameter(game) {
   const [RIGHT, LEFT, ROTATE, DOWN, DOWNBUTTOM, STORE] = keystatus;
   game.x += ((RIGHT &&
@@ -33,6 +43,7 @@ function updateParameter(game) {
   game.y += (DOWN &&
                 doesPieceFit(game.x, game.y+1, game.rotate, game.item)) ?
                 1:0;
+  if (DOWNBUTTOM) checkDownButton(game);
   game.rotate += (ROTATE &&
                     doesPieceFit(game.x, game.y, game.rotate+1, game.item)) ?
                     1:0;

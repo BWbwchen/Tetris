@@ -2,7 +2,9 @@ html {
   font-family: sans-serif;
 }
 canvas {
+
   display: block;
   margin: auto;
+  border: 1px solid black;
   background: burlywood;
 }
