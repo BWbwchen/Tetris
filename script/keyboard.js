@@ -1,5 +1,6 @@
 document.addEventListener('keydown', keyboardDown);
 document.addEventListener('keyup', keyboardUp);
+
 function keyboardDown(e) {
   //keystatus = keystatus.fill(false);
   switch (e.key) {
@@ -25,6 +26,7 @@ function keyboardDown(e) {
       break;
   }
 }
+
 function keyboardUp(e) {
   keystatus = keystatus.fill(false);
 }
