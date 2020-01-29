@@ -74,5 +74,4 @@ function render(gameboard) {
       }
     }
   }
-
 }

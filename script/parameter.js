@@ -47,4 +47,3 @@ const piece = [
 ];
 let map = new Array(HEIGHT).fill(false).map(() => new Array(WIDTH).fill(false));
 let keystatus = new Array(6).fill(false);
-let pieceShadow = new Array(HEIGHT).fill(false).map(() => new Array(WIDTH).fill(false));
