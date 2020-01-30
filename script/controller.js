@@ -112,6 +112,11 @@ function makeMap(game) {
   }
 }
 
+function adjustAutoDropSpeed (speed) {
+  window.clearInterval(autoDropID);
+  autoDropID = window.setInterval(autoDrop, autoDropSpeed-speed*hard, game);
+}
+
 function clearLine() {
   let fullLine = [];
   // record full line 
@@ -129,6 +134,7 @@ function clearLine() {
   levelClear += fullLine.length;
   if (levelClear >= 10) {
     level++;
+    adjustAutoDropSpeed(level);
     levelClear -= 10;
   }
 
@@ -161,6 +167,7 @@ function autoDrop(game) {
     if (doesPieceFit(game.x, game.y, game.rotate, game.item) === false) {
       game.renew(getRandom());
     }
+    adjustAutoDropSpeed(level);
     storeBefore = false;
   } else {
     game.y++;

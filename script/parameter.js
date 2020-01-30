@@ -70,3 +70,8 @@ let score = 0;
 // store block
 let storeItem = -1;
 let storeBefore = false;
+
+// time Id
+const autoDropSpeed = 800;
+const hard = 200;
+let autoDropID;

@@ -18,6 +18,6 @@ function startGame() {
   initCanvas();
   // game main
   window.setInterval(updateParameter, 500, game);
-  window.setInterval(autoDrop, 800, game);
+  autoDropID = window.setInterval(autoDrop, autoDropSpeed, game);
   window.setInterval(render, 30, game);
 }

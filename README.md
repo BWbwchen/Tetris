@@ -10,7 +10,6 @@ If you have some good idea, feel free to make a PR or issue !
 - [x] Block color 
 - [x] Score 
 - [x] Store block 
-- [ ] Random problem 
-- [ ] Lose Scene 
-- [ ] More CSS
-- [ ] Adjust drop speed 
+- [x] More CSS
+- [x] Adjust drop speed 
+- [ ] Lose Scene
