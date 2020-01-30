@@ -100,13 +100,19 @@ function clearLine() {
     }
     if (full) fullLine.push(row);
   }
+  clearAtOnce = fullLine.length;
+  levelClear += fullLine.length;
+  if (levelClear >= 10) {
+    level++;
+    levelClear -= 10;
+  }
 
   // clear line
   for (let i = 0; i < fullLine.length; ++i) {
     for (let j = fullLine[i]; j > 0; --j) {
       for (let col = 0; col < WIDTH; ++col) {
         map[j][col] = map[j - 1][col];
-        colorMap[j][col] = colorMap[j-1][col];
+        colorMap[j][col] = colorMap[j - 1][col];
       }
     }
   }
@@ -134,4 +140,3 @@ function autoDrop(game) {
     game.y++;
   }
 }
-

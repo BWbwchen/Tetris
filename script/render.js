@@ -2,6 +2,8 @@ let canvas;
 let ctx;
 let canvas_store;
 let ctx_store;
+let scoreSystem = document.getElementById("scoring");
+let levelSystem = document.getElementById("level");
 
 function drawBlock(i, j, color) {
   ctx.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
@@ -25,7 +27,7 @@ function drawShadow(i, j) {
   ctx.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
 }
 
-function render(gameboard) {
+function drawMainGame(gameboard) {
   // main draw
   for (let i = 0; i < HEIGHT; ++i) {
     for (let j = 0; j < WIDTH; ++j) {
@@ -36,7 +38,7 @@ function render(gameboard) {
       else if (gameboard.x <= j && j <= gameboard.x + 3 &&
         gameboard.y <= i && i <= gameboard.y + 3) {
         const [rotateX, rotateY] =
-          rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
+        rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
 
         if (piece[gameboard.item][rotateY][rotateX] === 1) {
           drawBlock(i, j, color[game.item]);
@@ -48,7 +50,9 @@ function render(gameboard) {
       }
     }
   }
+}
 
+function drawMainShadow(gameboard) {
   // draw shadow
   let shadowy = gameboard.y;
   for (let i = 1; i < HEIGHT; ++i) {
@@ -76,16 +80,18 @@ function render(gameboard) {
       }
     }
   }
+}
 
+function drawPredictBlock(gameboard) {
   // draw predict block
   for (let i = 0; i < 4; ++i) {
     for (let j = 0; j < 4; ++j) {
       if (piece[predict][i][j] === 1) {
         // draw block
         ctx_store.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
-        ctx_store.fillStyle = 'white';
+        ctx_store.fillStyle = color[predict];
         ctx_store.fillRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
-        ctx_store.strokeStyle = 'gray';
+        ctx_store.strokeStyle = 'black';
         ctx_store.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
       } else {
         // draw empty
@@ -95,4 +101,24 @@ function render(gameboard) {
       }
     }
   }
+}
+
+function drawGameInfo() {
+  let temp;
+  if (clearAtOnce === 1) score += 40*(level+1);
+  else if (clearAtOnce === 2) score += 100*(level+1);
+  else if (clearAtOnce === 3) score += 300*(level+1);
+  else if (clearAtOnce === 4) score += 1200*(level+1);
+
+  clearAtOnce = 0;
+
+  scoreSystem.textContent = "Score : " + score;
+  levelSystem.textContent = "Level : " + level;
+}
+
+function render(gameboard) {
+  drawMainGame(gameboard);
+  drawMainShadow(gameboard);
+  drawPredictBlock(gameboard);
+  drawGameInfo();
 }

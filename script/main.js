@@ -1,11 +1,9 @@
 // ----------- main -------------//
 let game = new Controller(getRandom());
-/*
-  <canvas id="tetris" width="300" height="600"></canvas>
-  <canvas id="store" width="120" height="120"></canvas>
-*/
+
 let a = document.getElementById("play");
 document.addEventListener('click', startGame);
+
 function startGame() {
   a.innerHTML = "<canvas id=\"tetris\" width=\"300\" height=\"600\"></canvas>\n<canvas id=\"store\" width=\"120\" height=\"120\"></canvas>";
   // draw 
