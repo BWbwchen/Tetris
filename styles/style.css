@@ -7,11 +7,14 @@ h1 {
 }
 
 #store {
-  display: inline;
+  display: block;
   margin: auto;
   border: 5px solid rgb(255, 0, 0);
   border-radius: 6px;
   background: black;
+  position: absolute;
+  top: 10.5%;
+  left: 63%;
 }
 
 #tetris{

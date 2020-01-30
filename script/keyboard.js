@@ -25,6 +25,7 @@ function keyboardDown(e) {
     default:
       break;
   }
+  updateParameter(game);
 }
 
 function keyboardUp(e) {

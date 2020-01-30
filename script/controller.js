@@ -78,7 +78,10 @@ function makeMap(game) {
     for (let col = 0; col < WIDTH; ++col) {
       if (game.y <= row && row <= game.y + 3 && game.x <= col && col <= game.x + 3) {
         const [rotateX, rotateY] = rotateIndex(col - game.x, row - game.y, game.rotate);
-        if (piece[game.item][rotateY][rotateX] === 1) map[row][col] = true;
+        if (piece[game.item][rotateY][rotateX] === 1) {
+          map[row][col] = true;
+          colorMap[row][col] = game.item;
+        }
       }
     }
   }
@@ -103,14 +106,18 @@ function clearLine() {
     for (let j = fullLine[i]; j > 0; --j) {
       for (let col = 0; col < WIDTH; ++col) {
         map[j][col] = map[j - 1][col];
+        colorMap[j][col] = colorMap[j-1][col];
       }
     }
   }
 }
 
 function getRandom() {
-  return Math.floor(Math.random() * Math.floor(7));
+  let temp = predict;
+  predict = Math.floor(Math.random() * Math.floor(7));
+  return temp;
 }
+
 
 function autoDrop(game) {
   if (doesPieceFit(game.x, game.y + 1, game.rotate, game.item) === false) {
@@ -127,3 +134,4 @@ function autoDrop(game) {
     game.y++;
   }
 }
+

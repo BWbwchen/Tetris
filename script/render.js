@@ -1,11 +1,13 @@
 const canvas = document.getElementById('tetris');
 const ctx = canvas.getContext('2d');
+const canvas_store = document.getElementById('store');
+const ctx_store = canvas_store.getContext('2d');
 
-function drawBlock(i, j) {
+function drawBlock(i, j, color) {
   ctx.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = color;
   ctx.fillRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
-  ctx.strokeStyle = 'gray';
+  ctx.strokeStyle = 'black';
   ctx.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
 }
 
@@ -28,16 +30,16 @@ function render(gameboard) {
   for (let i = 0; i < HEIGHT; ++i) {
     for (let j = 0; j < WIDTH; ++j) {
       if (map[i][j] === true) {
-        drawBlock(i, j);
+        drawBlock(i, j, color[colorMap[i][j]]);
       }
       // draw piece
       else if (gameboard.x <= j && j <= gameboard.x + 3 &&
         gameboard.y <= i && i <= gameboard.y + 3) {
         const [rotateX, rotateY] =
-        rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
+          rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
 
         if (piece[gameboard.item][rotateY][rotateX] === 1) {
-          drawBlock(i, j);
+          drawBlock(i, j, color[game.item]);
         } else {
           drawEmpty(i, j);
         }
@@ -71,6 +73,25 @@ function render(gameboard) {
         } else {
           drawShadow(i, j);
         }
+      }
+    }
+  }
+
+  // draw predict block
+  for (let i = 0; i < 4; ++i) {
+    for (let j = 0; j < 4; ++j) {
+      if (piece[predict][i][j] === 1) {
+        // draw block
+        ctx_store.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+        ctx_store.fillStyle = 'white';
+        ctx_store.fillRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+        ctx_store.strokeStyle = 'gray';
+        ctx_store.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+      } else {
+        // draw empty
+        ctx_store.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+        ctx_store.strokeStyle = 'gray';
+        ctx_store.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
       }
     }
   }
