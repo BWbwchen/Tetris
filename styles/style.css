@@ -47,13 +47,37 @@ h1 {
   border-radius: 6px;
   background: black;
 }
-
+/*
 button {
   text-align: center;
+}
+*/
+button {
+	box-shadow: -3px 4px 2px -1px #fff6af;
+	background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	background-color:#ffec64;
+	border-radius:16px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-size:17px;
+	font-weight:bold;
+	padding:5px 34px;
+	text-decoration:none;
   position: relative;
   top: 10%;
-  left: 44%;
+  left: 42%;
 }
+button:hover {
+	background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	background-color:#ffab23;
+}
+button:active {
+	position:relative;
+	top:1px;
+}
+
 
 #scoring {
   text-align: center;

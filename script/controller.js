@@ -17,10 +17,15 @@ class Controller {
     for (let i = 0; i < HEIGHT; ++i) {
       for (let j = 0; j < WIDTH; ++j) {
         map[i][j] = false;
+        colorMap[i][j] = -1;
       }
     }
     storeItem = -1;
     storeBefore = false;
+    levelClear = 0;
+    level = 0;
+    clearAtOnce = 0;
+    score = 0;
   }
 }
 
@@ -28,7 +33,7 @@ function checkDownButton(game) {
   let count = 0;
   for (let i = 1; i < HEIGHT; ++i) {
     if (doesPieceFit(game.x, game.y + i, game.rotate, game.item)) {
-      count++;
+      count = i;
     }
   }
   game.y += count;
@@ -48,6 +53,11 @@ function updateParameter(game) {
         storeItem = temp
       }
     }
+    return ;
+  }
+  if (DOWNBUTTOM) {
+    checkDownButton(game);
+    return;
   }
   game.x += ((RIGHT &&
         doesPieceFit(game.x + 1, game.y, game.rotate, game.item)) ?
@@ -58,13 +68,13 @@ function updateParameter(game) {
   game.y += (DOWN &&
       doesPieceFit(game.x, game.y + 1, game.rotate, game.item)) ?
     1 : 0;
-  if (DOWNBUTTOM) checkDownButton(game);
   game.rotate += (ROTATE &&
       doesPieceFit(game.x, game.y, game.rotate + 1, game.item)) ?
     1 : 0;
 }
 
 function doesPieceFit(x, y, rotate, item) {
+  // TODO : increase the speed of judge 
   for (let dx = 0; dx < 4; ++dx) {
     for (let dy = 0; dy < 4; ++dy) {
       const [rotateX, rotateY] = rotateIndex(dx, dy, rotate);

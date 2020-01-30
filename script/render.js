@@ -115,8 +115,6 @@ function drawPredictBlock(gameboard) {
 function drawGameInfo() {
   let scoreSystem = document.getElementById("scoring");
   let levelSystem = document.getElementById("level");
-  let text_store = document.getElementById("text_store");
-  let text_next = document.getElementById("text_next");
 
   if (clearAtOnce === 1) score += 40*(level+1);
   else if (clearAtOnce === 2) score += 100*(level+1);
