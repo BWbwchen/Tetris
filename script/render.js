@@ -1,9 +1,18 @@
 let canvas;
 let ctx;
+let canvas_predict;
+let ctx_predict;
 let canvas_store;
 let ctx_store;
-let scoreSystem = document.getElementById("scoring");
-let levelSystem = document.getElementById("level");
+
+function initCanvas () {
+  canvas = document.getElementById('tetris');
+  ctx = canvas.getContext('2d');
+  canvas_predict = document.getElementById('predict');
+  ctx_predict = canvas_predict.getContext('2d');
+  canvas_store = document.getElementById('store');
+  ctx_store = canvas_store.getContext('2d');
+}
 
 function drawBlock(i, j, color) {
   ctx.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
@@ -88,8 +97,45 @@ function drawPredictBlock(gameboard) {
     for (let j = 0; j < 4; ++j) {
       if (piece[predict][i][j] === 1) {
         // draw block
+        ctx_predict.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+        ctx_predict.fillStyle = color[predict];
+        ctx_predict.fillRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+        ctx_predict.strokeStyle = 'black';
+        ctx_predict.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+      } else {
+        // draw empty
+        ctx_predict.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+        ctx_predict.strokeStyle = 'gray';
+        ctx_predict.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
+      }
+    }
+  }
+}
+
+function drawGameInfo() {
+  let scoreSystem = document.getElementById("scoring");
+  let levelSystem = document.getElementById("level");
+  let text_store = document.getElementById("text_store");
+  let text_next = document.getElementById("text_next");
+
+  if (clearAtOnce === 1) score += 40*(level+1);
+  else if (clearAtOnce === 2) score += 100*(level+1);
+  else if (clearAtOnce === 3) score += 300*(level+1);
+  else if (clearAtOnce === 4) score += 1200*(level+1);
+
+  clearAtOnce = 0;
+
+  scoreSystem.textContent = "Score : " + score;
+  levelSystem.textContent = "Level : " + level;
+}
+
+function drawStoreBlock () {
+  for (let i = 0; i < 4; ++i) {
+    for (let j = 0; j < 4; ++j) {
+      if (storeItem !== -1 && piece[storeItem][i][j] === 1) {
+        // draw block
         ctx_store.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
-        ctx_store.fillStyle = color[predict];
+        ctx_store.fillStyle = color[storeItem];
         ctx_store.fillRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
         ctx_store.strokeStyle = 'black';
         ctx_store.strokeRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);
@@ -103,22 +149,10 @@ function drawPredictBlock(gameboard) {
   }
 }
 
-function drawGameInfo() {
-  let temp;
-  if (clearAtOnce === 1) score += 40*(level+1);
-  else if (clearAtOnce === 2) score += 100*(level+1);
-  else if (clearAtOnce === 3) score += 300*(level+1);
-  else if (clearAtOnce === 4) score += 1200*(level+1);
-
-  clearAtOnce = 0;
-
-  scoreSystem.textContent = "Score : " + score;
-  levelSystem.textContent = "Level : " + level;
-}
-
 function render(gameboard) {
   drawMainGame(gameboard);
   drawMainShadow(gameboard);
   drawPredictBlock(gameboard);
+  drawStoreBlock();
   drawGameInfo();
 }

@@ -22,6 +22,9 @@ function keyboardDown(e) {
       break;
     case ' ':
       keystatus[4] = true;
+      break;
+    case 'c':
+      keystatus[5] = true;
     default:
       break;
   }

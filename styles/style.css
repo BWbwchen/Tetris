@@ -6,6 +6,29 @@ h1 {
   text-align: center;
 }
 
+#text_store {
+  position:  absolute;
+  top: 7%;
+  left: 30.5%;
+}
+
+#text_next {
+  position:  absolute;
+  top: 7%;
+  left: 65.5%;
+}
+
+#predict {
+  display: block;
+  margin: auto;
+  border: 5px solid rgb(255, 0, 0);
+  border-radius: 6px;
+  background: black;
+  position: absolute;
+  top: 13.25%;
+  left: 63%;
+}
+
 #store {
   display: block;
   margin: auto;
@@ -13,8 +36,8 @@ h1 {
   border-radius: 6px;
   background: black;
   position: absolute;
-  top: 10.5%;
-  left: 63%;
+  top: 13.25%;
+  left: 28%;
 }
 
 #tetris{

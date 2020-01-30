@@ -9,7 +9,8 @@ If you have some good idea, feel free to make a PR or issue !
 - [x] Predict the next block
 - [x] Block color 
 - [x] Score 
-- [ ] Store block 
+- [x] Store block 
+- [ ] Random problem 
 - [ ] Lose Scene 
 - [ ] More CSS
 - [ ] Adjust drop speed 

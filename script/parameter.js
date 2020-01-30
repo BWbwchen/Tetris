@@ -66,3 +66,7 @@ let levelClear = 0;
 let level = 0;
 let clearAtOnce = 0;
 let score = 0;
+
+// store block
+let storeItem = -1;
+let storeBefore = false;

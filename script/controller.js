@@ -34,6 +34,19 @@ function checkDownButton(game) {
 
 function updateParameter(game) {
   const [RIGHT, LEFT, ROTATE, DOWN, DOWNBUTTOM, STORE] = keystatus;
+  if (STORE) {
+    if (!storeBefore || storeItem === -1) {
+      storeBefore = true;
+      if (storeItem === -1) {
+        storeItem = game.item;
+        game.newPiece(getRandom());
+      } else {
+        let temp = game.item;
+        game.newPiece(storeItem);
+        storeItem = temp
+      }
+    }
+  }
   game.x += ((RIGHT &&
         doesPieceFit(game.x + 1, game.y, game.rotate, game.item)) ?
       1 : 0) -
@@ -136,6 +149,7 @@ function autoDrop(game) {
     if (doesPieceFit(game.x, game.y, game.rotate, game.item) === false) {
       game.renew(getRandom());
     }
+    storeBefore = false;
   } else {
     game.y++;
   }
