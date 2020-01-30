@@ -19,6 +19,8 @@ class Controller {
         map[i][j] = false;
       }
     }
+    storeItem = -1;
+    storeBefore = false;
   }
 }
 
