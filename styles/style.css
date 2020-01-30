@@ -25,3 +25,9 @@ h1 {
   background: black;
 }
 
+button {
+  text-align: center;
+  position: relative;
+  top: 10%;
+  left: 44%;
+}

@@ -1,7 +1,7 @@
-const canvas = document.getElementById('tetris');
-const ctx = canvas.getContext('2d');
-const canvas_store = document.getElementById('store');
-const ctx_store = canvas_store.getContext('2d');
+let canvas;
+let ctx;
+let canvas_store;
+let ctx_store;
 
 function drawBlock(i, j, color) {
   ctx.clearRect(BLOCK_SIZE * j, BLOCK_SIZE * i, BLOCK_SIZE, BLOCK_SIZE);

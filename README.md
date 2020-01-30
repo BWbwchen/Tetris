@@ -8,5 +8,7 @@ If you have some good idea, feel free to make a PR or issue !
 ## TODO
 - [x] Predict the next block
 - [x] Block color 
+- [ ] Lose Scene 
 - [ ] Score 
 - [ ] More CSS
+- [ ] Adjust drop speed 
