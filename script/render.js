@@ -1,3 +1,5 @@
+import {rotateIndex, doesPieceFit} from "./controller.js";
+
 let canvas;
 let ctx;
 let canvas_predict;
@@ -12,6 +14,7 @@ function initCanvas () {
   ctx_predict = canvas_predict.getContext('2d');
   canvas_store = document.getElementById('store');
   ctx_store = canvas_store.getContext('2d');
+  console.log("canvas done");
 }
 
 function drawBlock(i, j, color) {
@@ -47,10 +50,10 @@ function drawMainGame(gameboard) {
       else if (gameboard.x <= j && j <= gameboard.x + 3 &&
         gameboard.y <= i && i <= gameboard.y + 3) {
         const [rotateX, rotateY] =
-        rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
+          rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
 
         if (piece[gameboard.item][rotateY][rotateX] === 1) {
-          drawBlock(i, j, color[game.item]);
+          drawBlock(i, j, color[gameboard.item]);
         } else {
           drawEmpty(i, j);
         }
@@ -73,13 +76,13 @@ function drawMainShadow(gameboard) {
   for (let i = shadowy; i < shadowy + 4; ++i) {
     for (let j = gameboard.x; j < gameboard.x + 4; ++j) {
       const [rotateX, rotateY] =
-      rotateIndex(j - gameboard.x, i - shadowy, gameboard.rotate);
+        rotateIndex(j - gameboard.x, i - shadowy, gameboard.rotate);
       if (i - gameboard.y >= 4) {
         if (piece[gameboard.item][rotateY][rotateX] === 1) drawShadow(i, j);
         continue;
       }
       const [rotateOriginX, rotateOriginY] =
-      rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
+        rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
       if (piece[gameboard.item][rotateY][rotateX] === 1) {
         if (piece[gameboard.item][rotateOriginY][rotateOriginX] === 1) {
           // do nothing
@@ -91,7 +94,7 @@ function drawMainShadow(gameboard) {
   }
 }
 
-function drawPredictBlock(gameboard) {
+function drawPredictBlock() {
   // draw predict block
   for (let i = 0; i < 4; ++i) {
     for (let j = 0; j < 4; ++j) {
@@ -150,7 +153,9 @@ function drawStoreBlock () {
 function render(gameboard) {
   drawMainGame(gameboard);
   drawMainShadow(gameboard);
-  drawPredictBlock(gameboard);
+  drawPredictBlock();
   drawStoreBlock();
   drawGameInfo();
 }
+
+export {initCanvas, render};

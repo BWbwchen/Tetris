@@ -10,18 +10,27 @@
 <body>
   <h1>Tetris !</h1>
   <div id="play">
+    <canvas id="tetris" width="300" height="600"></canvas>
+    <canvas id="predict" width="120" height="120"></canvas> 
+    <canvas id="store" width="120" height="120"></canvas>
+    <!--
     <button>PRESS TO START</button>
+    -->
   </div>
   <div id="system">
+
     <h3 id="text_store"></h3>
     <h3 id="text_next"></h3>
     <h2 id="scoring"></h2>
     <h2 id="level"></h2>
   </div>
-  <script src="script/parameter.js"></script>
+  <!--
   <script src="script/controller.js"></script>
   <script src="script/render.js"></script>
   <script src="script/main.js"></script>
+  -->
+  <script src="script/parameter.js"></script>
+  <script src="script/main.js" type="module"></script>
   <script src="script/keyboard.js"></script>
 </body>
 

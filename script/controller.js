@@ -1,19 +1,16 @@
-let end = false;
 class Controller {
-  constructor(randomPiece) {
+  constructor() {
+    this.newPiece();
+    console.log(this);
+  }
+  newPiece = () => {
     this.x = 2;
     this.y = 0;
     this.rotate = 0;
-    this.item = randomPiece;
+    this.item = getRandom();
   }
-  newPiece(randomPiece) {
-    this.x = 2;
-    this.y = 0;
-    this.rotate = 0;
-    this.item = randomPiece;
-  }
-  renew(randomPiece) {
-    this.newPiece(randomPiece);
+  renew = () => {
+    this.newPiece();
     for (let i = 0; i < HEIGHT; ++i) {
       for (let j = 0; j < WIDTH; ++j) {
         map[i][j] = false;
@@ -27,6 +24,57 @@ class Controller {
     clearAtOnce = 0;
     score = 0;
   }
+  updateParameter = () => {
+    const [RIGHT, LEFT, ROTATE, DOWN, DOWNBUTTOM, STORE] = keystatus;
+    if (STORE) {
+      if (!storeBefore || storeItem === -1) {
+        storeBefore = true;
+        if (storeItem === -1) {
+          storeItem = this.item;
+          this.newPiece(getRandom());
+        } else {
+          let temp = this.item;
+          this.newPiece(storeItem);
+          storeItem = temp
+        }
+      }
+      return;
+    }
+    if (DOWNBUTTOM) {
+      checkDownButton(this);
+      return;
+    }
+    this.x += ((RIGHT &&
+          doesPieceFit(this.x + 1, this.y, this.rotate, this.item)) ?
+        1 : 0) -
+      ((LEFT &&
+          doesPieceFit(this.x - 1, this.y, this.rotate, this.item)) ?
+        1 : 0);
+    this.y += (DOWN &&
+        doesPieceFit(this.x, this.y + 1, this.rotate, this.item)) ?
+      1 : 0;
+    this.rotate += (ROTATE &&
+        doesPieceFit(this.x, this.y, this.rotate + 1, this.item)) ?
+      1 : 0;
+  }
+
+  autoDrop = () => {
+    if (doesPieceFit(this.x, this.y + 1, this.rotate, this.item) === false) {
+      // push into map
+      makeMap(this);
+      // clear line
+      clearLine();
+      // generate new piece
+      this.newPiece();
+      if (doesPieceFit(this.x, this.y, this.rotate, this.item) === false) {
+        this.renew(getRandom());
+      }
+      adjustAutoDropSpeed(this, level);
+      storeBefore = false;
+    } else {
+      this.y++;
+    }
+  }
 }
 
 function checkDownButton(game) {
@@ -39,41 +87,18 @@ function checkDownButton(game) {
   game.y += count;
 }
 
-function updateParameter(game) {
-  const [RIGHT, LEFT, ROTATE, DOWN, DOWNBUTTOM, STORE] = keystatus;
-  if (STORE) {
-    if (!storeBefore || storeItem === -1) {
-      storeBefore = true;
-      if (storeItem === -1) {
-        storeItem = game.item;
-        game.newPiece(getRandom());
-      } else {
-        let temp = game.item;
-        game.newPiece(storeItem);
-        storeItem = temp
-      }
-    }
-    return ;
+export function doesPieceFit(x, y, rotate, item) {
+  /*
+  x = x || 0;
+  y = y || 0;
+  rotate = rotate || 0;
+  item = item || 0;
+  */
+  /*
+  if (x === undefined || y === undefined || item === undefined || x < 0 || y < 0) {
+    return false;
   }
-  if (DOWNBUTTOM) {
-    checkDownButton(game);
-    return;
-  }
-  game.x += ((RIGHT &&
-        doesPieceFit(game.x + 1, game.y, game.rotate, game.item)) ?
-      1 : 0) -
-    ((LEFT &&
-        doesPieceFit(game.x - 1, game.y, game.rotate, game.item)) ?
-      1 : 0);
-  game.y += (DOWN &&
-      doesPieceFit(game.x, game.y + 1, game.rotate, game.item)) ?
-    1 : 0;
-  game.rotate += (ROTATE &&
-      doesPieceFit(game.x, game.y, game.rotate + 1, game.item)) ?
-    1 : 0;
-}
-
-function doesPieceFit(x, y, rotate, item) {
+  */
   // TODO : increase the speed of judge 
   for (let dx = 0; dx < 4; ++dx) {
     for (let dy = 0; dy < 4; ++dy) {
@@ -91,11 +116,12 @@ function doesPieceFit(x, y, rotate, item) {
   return true;
 }
 
-function rotateIndex(dx, dy, rotate) {
+export function rotateIndex(dx, dy, rotate) {
   if (rotate % 4 === 0) return [dx, dy];
   else if (rotate % 4 === 1) return [dy, 3 - dx];
   else if (rotate % 4 === 2) return [3 - dx, 3 - dy];
   else if (rotate % 4 === 3) return [3 - dy, dx];
+  else return [dx, dy];
 }
 
 function makeMap(game) {
@@ -112,9 +138,9 @@ function makeMap(game) {
   }
 }
 
-function adjustAutoDropSpeed (speed) {
+function adjustAutoDropSpeed(game, speed) {
   window.clearInterval(autoDropID);
-  autoDropID = window.setInterval(autoDrop, autoDropSpeed-speed*hard, game);
+  autoDropID = window.setInterval(game.autoDrop, autoDropSpeed - speed * hard);
 }
 
 function clearLine() {
@@ -155,21 +181,4 @@ function getRandom() {
   return temp;
 }
 
-
-function autoDrop(game) {
-  if (doesPieceFit(game.x, game.y + 1, game.rotate, game.item) === false) {
-    // push into map
-    makeMap(game);
-    // clear line
-    clearLine();
-    // generate new piece
-    game.newPiece(getRandom());
-    if (doesPieceFit(game.x, game.y, game.rotate, game.item) === false) {
-      game.renew(getRandom());
-    }
-    adjustAutoDropSpeed(level);
-    storeBefore = false;
-  } else {
-    game.y++;
-  }
-}
+export default Controller;

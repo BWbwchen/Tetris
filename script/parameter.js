@@ -75,3 +75,5 @@ let storeBefore = false;
 const autoDropSpeed = 800;
 const hard = 200;
 let autoDropID;
+
+let game;
