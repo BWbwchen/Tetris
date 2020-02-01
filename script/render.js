@@ -1,4 +1,7 @@
-import {rotateIndex, doesPieceFit} from "./controller.js";
+import {
+  rotateIndex,
+  doesPieceFit
+} from "./controller.js";
 
 let canvas;
 let ctx;
@@ -7,7 +10,7 @@ let ctx_predict;
 let canvas_store;
 let ctx_store;
 
-function initCanvas () {
+function initCanvas() {
   canvas = document.getElementById('tetris');
   ctx = canvas.getContext('2d');
   canvas_predict = document.getElementById('predict');
@@ -50,7 +53,7 @@ function drawMainGame(gameboard) {
       else if (gameboard.x <= j && j <= gameboard.x + 3 &&
         gameboard.y <= i && i <= gameboard.y + 3) {
         const [rotateX, rotateY] =
-          rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
+        rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
 
         if (piece[gameboard.item][rotateY][rotateX] === 1) {
           drawBlock(i, j, color[gameboard.item]);
@@ -76,13 +79,13 @@ function drawMainShadow(gameboard) {
   for (let i = shadowy; i < shadowy + 4; ++i) {
     for (let j = gameboard.x; j < gameboard.x + 4; ++j) {
       const [rotateX, rotateY] =
-        rotateIndex(j - gameboard.x, i - shadowy, gameboard.rotate);
+      rotateIndex(j - gameboard.x, i - shadowy, gameboard.rotate);
       if (i - gameboard.y >= 4) {
         if (piece[gameboard.item][rotateY][rotateX] === 1) drawShadow(i, j);
         continue;
       }
       const [rotateOriginX, rotateOriginY] =
-        rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
+      rotateIndex(j - gameboard.x, i - gameboard.y, gameboard.rotate);
       if (piece[gameboard.item][rotateY][rotateX] === 1) {
         if (piece[gameboard.item][rotateOriginY][rotateOriginX] === 1) {
           // do nothing
@@ -119,10 +122,10 @@ function drawGameInfo() {
   let scoreSystem = document.getElementById("scoring");
   let levelSystem = document.getElementById("level");
 
-  if (clearAtOnce === 1) score += 40*(level+1);
-  else if (clearAtOnce === 2) score += 100*(level+1);
-  else if (clearAtOnce === 3) score += 300*(level+1);
-  else if (clearAtOnce === 4) score += 1200*(level+1);
+  if (clearAtOnce === 1) score += 40 * (level + 1);
+  else if (clearAtOnce === 2) score += 100 * (level + 1);
+  else if (clearAtOnce === 3) score += 300 * (level + 1);
+  else if (clearAtOnce === 4) score += 1200 * (level + 1);
 
   clearAtOnce = 0;
 
@@ -130,7 +133,7 @@ function drawGameInfo() {
   levelSystem.textContent = "Level : " + level;
 }
 
-function drawStoreBlock () {
+function drawStoreBlock() {
   for (let i = 0; i < 4; ++i) {
     for (let j = 0; j < 4; ++j) {
       if (storeItem !== -1 && piece[storeItem][i][j] === 1) {
@@ -158,4 +161,7 @@ function render(gameboard) {
   drawGameInfo();
 }
 
-export {initCanvas, render};
+export {
+  initCanvas,
+  render
+};

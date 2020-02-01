@@ -1,5 +1,8 @@
 import Controller from "./controller.js";
-import {initCanvas, render} from "./render.js";
+import {
+  initCanvas,
+  render
+} from "./render.js";
 // ----------- main -------------//
 
 // button
@@ -18,14 +21,14 @@ function startGame() {
   let text_next = document.getElementById("text_next");
   text_store.textContent = "Store";
   text_next.textContent = "Next";
+
   // draw 
   initCanvas();
+
   // game main
   window.setInterval(game.updateParameter, 500);
-  //game.updateParameter();
   autoDropID = window.setInterval(game.autoDrop, autoDropSpeed);
-  //game.autoDrop();
   window.setInterval(render, 30, game);
-  //render(game);
 }
+
 startGame();

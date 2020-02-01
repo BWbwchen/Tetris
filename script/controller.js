@@ -88,17 +88,6 @@ function checkDownButton(game) {
 }
 
 export function doesPieceFit(x, y, rotate, item) {
-  /*
-  x = x || 0;
-  y = y || 0;
-  rotate = rotate || 0;
-  item = item || 0;
-  */
-  /*
-  if (x === undefined || y === undefined || item === undefined || x < 0 || y < 0) {
-    return false;
-  }
-  */
   // TODO : increase the speed of judge 
   for (let dx = 0; dx < 4; ++dx) {
     for (let dy = 0; dy < 4; ++dy) {
